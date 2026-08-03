@@ -1,12 +1,21 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import LegalShell from "../LegalShell";
 
+// HIDDEN — the funnel is free by application, so there is no fee to cancel or
+// refund and this policy would be misleading if anyone reached it. The page is
+// kept intact (not deleted) so it can be restored the day a paid offer returns:
+// delete the `notFound()` line below and re-add the footer links in
+// app/Footer.tsx + the colophon nav in app/page.tsx.
 export const metadata: Metadata = {
   title: "Cancellation and Refund Policy | FitWithPalak",
   description: "The FitWithPalak clarity-or-fee-back promise, refunds, and rescheduling.",
+  robots: { index: false, follow: false },
 };
 
 export default function RefundPage() {
+  notFound();
+
   return (
     <LegalShell
       eyebrow="FitWithPalak"

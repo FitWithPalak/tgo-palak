@@ -10,7 +10,6 @@ export default function Footer() {
         <a href="/">Home</a>
         <a href="/privacy">Privacy Policy</a>
         <a href="/terms">Terms &amp; Conditions</a>
-        <a href="/refund">Cancellation &amp; Refund</a>
         <a href={`mailto:${brand.supportEmail}`}>Contact</a>
       </nav>
     </footer>

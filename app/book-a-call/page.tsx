@@ -1,15 +1,17 @@
 import type { Metadata } from "next";
 import FunnelEffects from "../FunnelEffects";
 import Footer from "../Footer";
-import { priceLabel, brand } from "@/lib/config";
+import { brand } from "@/lib/config";
 
 export const metadata: Metadata = {
   title: "Book your Clarity Call | FitWithPalak",
-  description: `Your ${priceLabel} is confirmed. Pick a time for your 30-minute 1:1 Clarity Call with Palak.`,
+  description:
+    "Your application is approved. Pick a time for your 30-minute 1:1 Clarity Call with Palak.",
+  robots: { index: false, follow: false },
 };
 
 const SLOT_WA_MESSAGE =
-  "Hi FitWithPalak, I have booked and paid for my Clarity Call, but my preferred time slot is not showing. Here are my details:\nName:\nEmail:\nPhone:\nPreferred day and time:";
+  "Hi FitWithPalak, my application for a Clarity Call was approved, but my preferred time slot is not showing. Here are my details:\nName:\nEmail:\nPhone:\nPreferred day and time:";
 const SLOT_MAIL_SUBJECT = "Preferred slot not available — Clarity Call";
 
 export default function BookACallPage() {
@@ -21,13 +23,13 @@ export default function BookACallPage() {
       <FunnelEffects sticky={false} />
 
       {/* ============================================== CHROME */}
-      <div className="urgency-strip pk-topstrip" role="note" aria-label="Payment confirmed">
+      <div className="urgency-strip pk-topstrip" role="note" aria-label="Application approved">
         <div className="pk-ticker">
           <div className="pk-ticker-grp">
-            <span>Payment confirmed</span><span className="sep" aria-hidden="true">/</span><span>₹499 received</span><span className="sep" aria-hidden="true">/</span><span>30 minutes, 1:1 with Palak</span>
+            <span>Application approved</span><span className="sep" aria-hidden="true">/</span><span>Priority slot held</span><span className="sep" aria-hidden="true">/</span><span>30 minutes, 1:1 with Palak</span>
           </div>
           <div className="pk-ticker-grp" aria-hidden="true">
-            <span>Payment confirmed</span><span className="sep">/</span><span>₹499 received</span><span className="sep">/</span><span>30 minutes, 1:1 with Palak</span>
+            <span>Application approved</span><span className="sep">/</span><span>Priority slot held</span><span className="sep">/</span><span>30 minutes, 1:1 with Palak</span>
           </div>
         </div>
       </div>
@@ -37,13 +39,13 @@ export default function BookACallPage() {
           <a className="pk-brand" href="/" aria-label="FitWithPalak home">
             <img className="pk-brand-logo" src="/brand-logo.png" alt="FitWithPalak" />
           </a>
-          <span className="pk-nav-cta" aria-hidden="true">Payment confirmed</span>
+          <span className="pk-nav-cta" aria-hidden="true">Application approved</span>
         </div>
       </header>
 
       <main id="top" className="pk-bookstage">
         {/* ============================================== 1 · SUCCESS HEADER + URGENCY */}
-        <section className="section pk-book-head" aria-label="Payment confirmed">
+        <section className="section pk-book-head" aria-label="Application approved">
           <div className="wrapn">
             <div className="pk-success">
               <span className="pk-success-seal" aria-hidden="true">
@@ -52,9 +54,9 @@ export default function BookACallPage() {
               </span>
             </div>
             <div className="sec-head">
-              <span className="eyebrow">Payment confirmed</span>
+              <span className="eyebrow">Application approved</span>
               <h2 className="display">You are in. Now pick your time.</h2>
-              <p className="deck">Your ₹499 is confirmed. Choose a slot below and your call link comes straight to your email.</p>
+              <p className="deck">Your answers qualified you for a priority Clarity Call. Choose a slot below and your call link comes straight to your email.</p>
             </div>
           </div>
         </section>
@@ -93,7 +95,7 @@ export default function BookACallPage() {
                   Preferred slot not available?
                 </span>
                 <h3 className="pk-slot-title">Cannot find a time that works for you?</h3>
-                <p className="pk-slot-text">You have already paid, and your seat is reserved, so you will not lose it. If none of the times above suit you, message us your <strong>name, email, phone number, and your preferred day and time</strong>, and we will personally set up your slot.</p>
+                <p className="pk-slot-text">Your application is approved and your seat is reserved, so you will not lose it. If none of the times above suit you, message us your <strong>name, email, phone number, and your preferred day and time</strong>, and we will personally set up your slot.</p>
                 <div className="pk-slot-actions">
                   <a className="pk-slot-btn pk-slot-btn--wa" href={waHref} target="_blank" rel="noopener noreferrer">
                     <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15l-1.3 4.8 4.9-1.3A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.2 14.8l-.3-.2-2.9.8.8-2.8-.2-.3A8 8 0 0 1 12 4zm-3 4.2c-.2 0-.5 0-.7.4-.2.4-.9 1-.9 2.3s.9 2.6 1.1 2.8c.1.2 1.8 2.9 4.5 3.9 2.2.9 2.7.7 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.6-.3l-1.8-.9c-.2-.1-.4-.1-.6.1l-.8 1c-.2.2-.3.2-.6.1-.3-.2-1.2-.5-2.3-1.4-.8-.7-1.4-1.6-1.6-1.9-.1-.3 0-.4.1-.5l.5-.5c.1-.2.2-.3.3-.5.1-.2 0-.4 0-.5l-.9-2c-.2-.5-.4-.5-.6-.5z" /></svg>
@@ -176,7 +178,7 @@ export default function BookACallPage() {
         {/* ============================================== 4 · NUDGE */}
         <section className="section" data-reveal aria-label="A quick nudge">
           <div className="wrapn">
-            <p className="pk-book-nudge">You have already paid. The only thing left is to pick a time. <strong>An unbooked call cannot help you.</strong></p>
+            <p className="pk-book-nudge">You are already approved. The only thing left is to pick a time. <strong>An unbooked call cannot help you.</strong></p>
           </div>
         </section>
 
@@ -200,7 +202,7 @@ export default function BookACallPage() {
                   <span className="pk-faq-q">Can I reschedule?</span>
                   <span className="pk-faq-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 8l5 5 5-5" /></svg></span>
                 </summary>
-                <div className="pk-faq-a"><p>Please only reschedule if there is a genuine emergency. If something urgent comes up, use the link in your confirmation email to move your call, and your ₹499 stays valid. Palak holds a limited number of these slots, so keeping your time helps every woman get seen.</p></div>
+                <div className="pk-faq-a"><p>Please only reschedule if there is a genuine emergency. If something urgent comes up, use the link in your confirmation email to move your call, and your slot stays reserved. Palak holds a limited number of these slots, so keeping your time helps every woman get seen.</p></div>
               </details>
             </div>
           </div>

@@ -11,20 +11,22 @@ export default function TermsPage() {
     <LegalShell
       eyebrow="FitWithPalak"
       title="Terms and Conditions"
-      intro="These terms explain what the Clarity Call is, what it is not, and the terms on which you book it. Please read them before you pay. By booking a call, you agree to these terms."
+      intro="These terms explain what the Clarity Call is, what it is not, and the terms on which you book it. Please read them before you apply. By applying for and booking a call, you agree to these terms."
     >
       <h2>1. About the service</h2>
-      <p>The Clarity Call is a paid 30-minute 1:1 educational clinical nutrition assessment with Palak, a clinical functional nutritionist. The fee is ₹499. On the call, Palak reviews the information and reports you share and gives you an educational view of what may be driving how you feel, which markers your current reports may be missing, and what to look at first.</p>
+      <p>The Clarity Call is a free 30-minute 1:1 educational clinical nutrition assessment with Palak, a clinical functional nutritionist. There is no fee and no payment is taken for the call. On the call, Palak reviews the information and reports you share and gives you an educational view of what may be driving how you feel, which markers your current reports may be missing, and what to look at first.</p>
 
       <h2>2. What the service is not</h2>
       <p>The Clarity Call is for education and guidance only. It is not medical treatment, diagnosis, a prescription, or emergency care. It does not create a doctor and patient relationship. It is meant to work alongside the care of your own doctor, never to replace it. You should not stop, start, or change any medication based on the call. Always consult your doctor before making any medical decision. If you are having a medical emergency, do not use this service. Contact your doctor or your local emergency number right away.</p>
 
-      <h2>3. Booking and payment</h2>
+      <h2>3. Applying and booking</h2>
       <ul>
-        <li>The fee for one Clarity Call is ₹499, payable in advance through our payment processor, Razorpay.</li>
-        <li>Your booking is confirmed only after your payment is received and you receive a confirmation from us.</li>
+        <li>The Clarity Call is free. We do not take payment for it, and we will never ask you for card or bank details to book one.</li>
+        <li>Slots are limited and are offered by application. You answer a short set of questions, and a call is offered only where the answers indicate the call is likely to be genuinely useful for you.</li>
+        <li>Applying does not guarantee a call. We may decline an application, and we may withdraw a slot where the information given turns out to be inaccurate.</li>
         <li>You choose your slot at the time of booking. Your call link and joining details are sent to the email and phone number you provide, so please make sure they are correct.</li>
-        <li>Refunds and rescheduling are covered in our <a href="/refund">Cancellation and Refund Policy</a>.</li>
+        <li>If a genuine emergency means you cannot attend, please reschedule using the link in your confirmation email as early as you can, so the slot can be offered to someone else.</li>
+        <li>On the call Palak may tell you about a paid program. That is entirely optional, it is never a condition of the free call, and nothing is charged unless you separately choose to enrol.</li>
       </ul>
 
       <h2>4. Your responsibilities</h2>

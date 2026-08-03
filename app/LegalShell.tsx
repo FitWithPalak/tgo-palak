@@ -17,10 +17,10 @@ export default function LegalShell({
       <div className="urgency-strip pk-topstrip" role="note" aria-label="FitWithPalak">
         <div className="pk-ticker">
           <div className="pk-ticker-grp">
-            <span>1:1 with Palak</span><span className="sep" aria-hidden="true">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep" aria-hidden="true">/</span><span>Clarity or your fee back</span>
+            <span>1:1 with Palak</span><span className="sep" aria-hidden="true">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep" aria-hidden="true">/</span><span>Completely free, by application</span>
           </div>
           <div className="pk-ticker-grp" aria-hidden="true">
-            <span>1:1 with Palak</span><span className="sep">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep">/</span><span>Clarity or your fee back</span>
+            <span>1:1 with Palak</span><span className="sep">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep">/</span><span>Completely free, by application</span>
           </div>
         </div>
       </div>
@@ -30,7 +30,7 @@ export default function LegalShell({
           <a className="pk-brand" href="/" aria-label="FitWithPalak home">
             <img className="pk-brand-logo" src="/brand-logo.png" alt="FitWithPalak" />
           </a>
-          <a className="pk-nav-cta" href="/checkout">Book My Clarity Call</a>
+          <a className="pk-nav-cta" href="/apply">Book My Clarity Call</a>
         </div>
       </header>
 
