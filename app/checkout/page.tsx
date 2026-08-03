@@ -1,15 +1,24 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import FunnelEffects from "../FunnelEffects";
 import Footer from "../Footer";
 import CheckoutClient from "./CheckoutClient";
 import { pricing, priceLabel } from "@/lib/config";
 
+// HIDDEN — the ₹499 checkout is no longer part of the funnel. CTAs now open the
+// qualifier at /apply and approved applicants go straight to /book-a-call.
+// The page, CheckoutClient, and the Razorpay routes are kept intact so a paid
+// step can be restored: delete the `notFound()` line below and point the CTAs
+// back at /checkout (see QUALIFIER_PATH in lib/qualifier.ts).
 export const metadata: Metadata = {
   title: "Checkout | FitWithPalak Clarity Call",
   description: `Confirm your details and book your 30-minute 1:1 Clarity Call with Palak for ${priceLabel}.`,
+  robots: { index: false, follow: false },
 };
 
 export default function CheckoutPage() {
+  notFound();
+
   return (
     <>
       <FunnelEffects sticky={false} />

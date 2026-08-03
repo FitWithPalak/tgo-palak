@@ -1,18 +1,23 @@
 import FunnelEffects from "./FunnelEffects";
+import QualifierModal from "./QualifierModal";
+import { QUALIFIER_PATH } from "@/lib/qualifier";
 
 export default function Page() {
   return (
     <>
-      <FunnelEffects bookHref="/checkout" />
+      <FunnelEffects bookHref={QUALIFIER_PATH} />
+      {/* Every CTA below is a plain <a href="/apply">. This intercepts the click
+          and opens the step form as an overlay; without JS the link still works. */}
+      <QualifierModal />
 
       {/* ============================================== 1 · CHROME (page) */}
       <div className="urgency-strip pk-topstrip" role="note" aria-label="What the Clarity Call is">
         <div className="pk-ticker">
           <div className="pk-ticker-grp">
-            <span>1:1 with Palak</span><span className="sep" aria-hidden="true">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep" aria-hidden="true">/</span><span>Clarity or money back guarantee</span>
+            <span>1:1 with Palak</span><span className="sep" aria-hidden="true">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep" aria-hidden="true">/</span><span>Completely free, by application</span>
           </div>
           <div className="pk-ticker-grp" aria-hidden="true">
-            <span>1:1 with Palak</span><span className="sep">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep">/</span><span>Clarity or money back guarantee</span>
+            <span>1:1 with Palak</span><span className="sep">/</span><span>A clinical assessment, not a sales pitch</span><span className="sep">/</span><span>Completely free, by application</span>
           </div>
         </div>
       </div>
@@ -22,7 +27,7 @@ export default function Page() {
           <a className="pk-brand" href="#top" aria-label="FitWithPalak home">
             <img className="pk-brand-logo" src="/brand-logo.png" alt="FitWithPalak" />
           </a>
-          <a className="pk-nav-cta" href="/checkout">BOOK MY 1:1 CALL WITH PALAK</a>
+          <a className="pk-nav-cta" href="/apply">BOOK MY 1:1 CALL WITH PALAK</a>
         </div>
       </header>
 
@@ -61,13 +66,13 @@ export default function Page() {
               </div>
             </div>
 
-            <a className="cta-big" href="/checkout" role="button">
+            <a className="cta-big" href="/apply" role="button">
               BOOK MY 1:1 CALL WITH PALAK
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
               </svg>
             </a>
-            {/* <p className="pk-cta-guarantee">Clarity or money back guarantee</p> */}
+            {/* <p className="pk-cta-guarantee">Completely free &middot; No obligation</p> */}
             <ul className="pk-cta-points" aria-label="What the call is">
               <li>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -85,7 +90,7 @@ export default function Page() {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" /><path d="M9 12l2 2 4-4" />
                 </svg>
-                Clarity or money back guarantee
+                Completely free, no obligation
               </li>
             </ul>
 
@@ -372,13 +377,14 @@ export default function Page() {
           </div>
         </section>
 
-        {/* ============================================== 8.5 · VALUE STACK (what you get for the fee) */}
+        {/* ============================================== 8.5 · VALUE STACK (what the free call includes;
+            the ₹ figures below are value anchors, not amounts charged) */}
         <section className="section section--soft" data-reveal aria-label="Everything you get">
           <div className="wrap">
             <div className="sec-head">
               <span className="eyebrow">What you get</span>
-              <h2 className="display">Everything you get for just <span className="pk-vs-price">₹499</span>.</h2>
-              <p className="deck">A focused 1:1 assessment, a clear root cause analysis, and a private community of women doing the same work. Here is everything that is yours the moment you book.</p>
+              <h2 className="display">Everything you get, and it costs you <span className="pk-vs-price">nothing</span>.</h2>
+              <p className="deck">A focused 1:1 assessment, a clear root cause analysis, and a private community of women doing the same work. Here is everything that is yours the moment your application is approved.</p>
             </div>
 
             <div className="pk-vstack-grid">
@@ -430,18 +436,18 @@ export default function Page() {
               </span>
               <div className="pk-vs-pay">
                 <span className="pk-vs-pay-lbl">You pay today</span>
-                <span className="pk-vs-pay-fig">₹499</span>
+                <span className="pk-vs-pay-fig">Free</span>
               </div>
             </div>
 
             <div className="pk-vstack-cta">
-              <a className="cta-big" href="/checkout" role="button">
+              <a className="cta-big" href="/apply" role="button">
                 Book My 1:1 Call With Palak
                 <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
                 </svg>
               </a>
-              <p className="pk-cta-guarantee">Clarity or money back guarantee</p>
+              <p className="pk-cta-guarantee">Completely free &middot; No obligation</p>
             </div>
           </div>
         </section>
@@ -486,26 +492,26 @@ export default function Page() {
               <p className="pk-offer-intro">Almost every woman asks this, so: <strong>do not wait for your reports before you book.</strong> You see the doctor first, and they tell you which tests to run. Same here. I look at your case, then I tell you <strong>exactly which bloodwork you actually need.</strong></p>
 
               <div className="pk-price">
-                <span className="pk-price-fig">₹499</span>
-                <p className="pk-price-reframe">The call is ₹499. That is on purpose. It is <span className="strike">not what my time is worth</span>, it is <span className="real">a filter</span>. It keeps this space for women who are genuinely ready to fix this, not just collect more opinions. <strong>If that is you, the fee will be the easiest decision on this page.</strong></p>
+                <span className="pk-price-fig">Free</span>
+                <p className="pk-price-reframe">The call itself is free. But it is <span className="strike">not open to everyone</span>, it is <span className="real">by application</span>. A few short questions keep this space for women who are genuinely ready to fix this, not just collect more opinions. <strong>If that is you, the application will be the easiest thing you do on this page.</strong></p>
               </div>
 
               <div className="pk-guarantee">
                 <span className="pk-seal" aria-hidden="true">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2.5l7 3v5.5c0 4.4-3 7.7-7 9-4-1.3-7-4.6-7-9V5.5z" /><path d="M8.5 12l2.4 2.4 4.6-4.8" /></svg>
                 </span>
-                <p className="pk-guarantee-text">And the risk is on me, not on you. If you finish the call and do not walk away with real clarity on what is happening and what to do next, <strong>your fee comes straight back.</strong> The only thing you are putting in is 30 minutes.</p>
+                <p className="pk-guarantee-text">And there is nothing to lose here. You are not paying anything, and you are not signing up for anything. <strong>The only thing you are putting in is 30 minutes.</strong> You leave with real clarity about your own body, whether or not we work together after this.</p>
               </div>
 
               <div className="pk-offer-cta">
-                <a className="cta-big" href="/checkout" role="button">
+                <a className="cta-big" href="/apply" role="button">
                   BOOK MY 1:1 CALL WITH PALAK
                   <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
                   </svg>
                 </a>
-                <p className="pk-cta-guarantee">Clarity or money back guarantee</p>
-                <p className="pk-cta-microline">Books instantly &middot; 30 minutes, 1:1 with Palak &middot; ₹499</p>
+                <p className="pk-cta-guarantee">Completely free &middot; No obligation</p>
+                <p className="pk-cta-microline">Apply in 30 seconds &middot; 30 minutes, 1:1 with Palak &middot; Free</p>
               </div>
             </div>
           </div>
@@ -584,10 +590,10 @@ export default function Page() {
 
               <details className="pk-faq-item">
                 <summary>
-                  <span className="pk-faq-q">Why is the call paid?</span>
+                  <span className="pk-faq-q">If it is free, why do I have to apply?</span>
                   <span className="pk-faq-chevron" aria-hidden="true"><svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round"><path d="M5 8l5 5 5-5" /></svg></span>
                 </summary>
-                <div className="pk-faq-a"><p>Because it filters. A small fee means the women on my calendar are serious about fixing this, which is the only way I can give each one a real clinical assessment instead of a rushed pitch. And it is risk-free for you: if you do not leave with real clarity, the fee comes back.</p></div>
+                <div className="pk-faq-a"><p>Because the application filters. Palak only has a limited number of these slots each week, and the questions make sure the women on her calendar are actually dealing with a thyroid or related concern and are ready to act on what they hear. That is the only way she can give each one a real clinical assessment instead of a rushed pitch. It takes about 30 seconds.</p></div>
               </details>
 
               <details className="pk-faq-item">
@@ -634,7 +640,7 @@ export default function Page() {
               <p>You were never the reason things have not improved. The picture was incomplete. Thirty minutes from now, you could finally know the actual cause.</p>
             </div>
 
-            <a className="cta-big" href="/checkout" role="button">
+            <a className="cta-big" href="/apply" role="button">
               BOOK MY 1:1 CALL WITH PALAK
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
@@ -657,7 +663,7 @@ export default function Page() {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M12 3l7 3v5c0 4.5-3 7.6-7 9-4-1.4-7-4.5-7-9V6l7-3z" /><path d="M9 12l2 2 4-4" />
                 </svg>
-                Clarity or money back guarantee
+                Completely free, no obligation
               </li>
             </ul>
           </div>
@@ -666,11 +672,10 @@ export default function Page() {
             <span className="pk-colophon-line">&copy; 2026 FitWithPalak &middot; Clinical Track</span>
             <span className="pk-colophon-orn" aria-hidden="true">&#10022;</span>
             <nav className="pk-colophon-nav" aria-label="Footer">
-              <a href="/checkout">Book</a>
+              <a href="/apply">Book</a>
               <a href="#faq">FAQ</a>
               <a href="/privacy">Privacy Policy</a>
               <a href="/terms">Terms &amp; Conditions</a>
-              <a href="/refund">Cancellation &amp; Refund</a>
             </nav>
           </div>
         </section>

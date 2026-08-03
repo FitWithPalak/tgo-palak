@@ -287,9 +287,11 @@ export default function FunnelEffects({
 
     // --- Analytics triggers (GA4 native + Meta AddToCart CAPI), delegated so
     //     they catch every CTA including the sticky bar (rendered by this comp).
-    // Any CTA that advances to /checkout -> GA4 add_to_cart + Meta AddToCart.
+    // Any CTA that advances into the qualifier -> GA4 add_to_cart + Meta AddToCart.
+    // (QualifierModal also listens for these clicks and preventDefaults them to
+    // open the overlay; preventDefault does not stop propagation, so this still runs.)
     const onCtaClick = (e: MouseEvent) => {
-      const link = (e.target as HTMLElement | null)?.closest?.('a[href="/checkout"]');
+      const link = (e.target as HTMLElement | null)?.closest?.('a[href="/apply"]');
       if (!link) return;
       trackGa4EventOnce("add_to_cart");
       fireMetaAddToCartOnce();
@@ -336,7 +338,7 @@ export default function FunnelEffects({
           <div className="pk-sticky-inner">
             <div className="pk-sticky-text">
               <span className="pk-sticky-lead">A 30-minute clinical assessment</span>
-              <span className="pk-sticky-sub">Clarity or money back guarantee</span>
+              <span className="pk-sticky-sub">Completely free &middot; By application</span>
             </div>
             <span className="pk-sticky-btn">
               BOOK MY 1:1 CALL WITH PALAK
