@@ -1,33 +1,10 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import { captureTrackingParams } from "@/lib/tracking";
+import { captureTrackingParams, restoreFbclid } from "@/lib/tracking";
 import { trackGa4EventOnce } from "@/lib/ga4";
-
-/** Meta AddToCart (server CAPI) — once per browser, survives navigation. */
-function fireMetaAddToCartOnce(): void {
-  try {
-    if (window.localStorage.getItem("fwp_atc_fired") === "1") return;
-    window.localStorage.setItem("fwp_atc_fired", "1"); // optimistic
-  } catch {
-    /* private mode — best-effort, continue */
-  }
-  const body = JSON.stringify({ eventSourceUrl: window.location.href });
-  try {
-    if (navigator.sendBeacon) {
-      navigator.sendBeacon("/api/meta/add-to-cart", new Blob([body], { type: "application/json" }));
-      return;
-    }
-  } catch {
-    /* fall through to fetch */
-  }
-  fetch("/api/meta/add-to-cart", {
-    method: "POST",
-    body,
-    keepalive: true,
-    headers: { "Content-Type": "application/json" },
-  }).catch(() => {});
-}
+import { fireMetaEventOnce } from "@/lib/meta-client";
+import { ANSWERS_KEY } from "@/lib/qualifier";
 
 /* Client-side conversion polish for the FitWithPalak Clinical Track page:
    - a top scroll-progress rail
@@ -294,7 +271,7 @@ export default function FunnelEffects({
       const link = (e.target as HTMLElement | null)?.closest?.('a[href="/apply"]');
       if (!link) return;
       trackGa4EventOnce("add_to_cart");
-      fireMetaAddToCartOnce();
+      fireMetaEventOnce("fwp_atc_fired", "/api/meta/add-to-cart");
     };
     document.addEventListener("click", onCtaClick);
 
@@ -304,6 +281,28 @@ export default function FunnelEffects({
       const data = e.data as { event?: string } | undefined;
       if (data && data.event === "calendly.event_scheduled") {
         trackGa4EventOnce("book_call");
+        // Meta Schedule (once per browser). Attach the applicant PII the qualifier
+        // saved in sessionStorage (same tab -> survives the push to /book-a-call)
+        // for high EMQ; if the page was opened fresh it still fires on fbc/fbp/IP/UA.
+        let leadBody: Record<string, unknown> = { fbclid: restoreFbclid() };
+        try {
+          const raw = window.sessionStorage.getItem(ANSWERS_KEY);
+          if (raw) {
+            const a = JSON.parse(raw) as {
+              name?: string; email?: string; whatsapp?: string; dialCode?: string;
+            };
+            leadBody = {
+              name: a.name ?? "",
+              email: a.email ?? "",
+              whatsapp: `${a.dialCode ?? "+91"}${a.whatsapp ?? ""}`,
+              dialCode: a.dialCode ?? "+91",
+              fbclid: restoreFbclid(),
+            };
+          }
+        } catch {
+          /* sessionStorage blocked -> fire with cookie-based match only */
+        }
+        fireMetaEventOnce("fwp_meta_schedule", "/api/meta/schedule", leadBody);
       }
     };
     window.addEventListener("message", onCalendlyMessage);

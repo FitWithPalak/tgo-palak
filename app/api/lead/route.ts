@@ -56,6 +56,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "incomplete" }, { status: 400 });
   }
 
+  // Mirror the client's country-aware phone rule (client validation is UX, not a
+  // guarantee): India (+91) must be a 10-digit 6-9 mobile; others stay permissive.
+  const phoneOk =
+    dialCode === "+91" ? /^[6-9]\d{9}$/.test(phoneDigits) : /^\d{7,15}$/.test(phoneDigits);
+  if (!phoneOk) {
+    return NextResponse.json({ ok: false, error: "invalid_phone" }, { status: 400 });
+  }
+
   const utm = (body.utm ?? {}) as Record<string, string | undefined>;
   const now = new Date();
 

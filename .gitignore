@@ -22,6 +22,9 @@ yarn-error.log*
 # local env files
 .env
 .env*.local
+# variant env files that don't end in .local (e.g. .env.local.free) — keep secrets out
+.env.local.*
+.env.*.local
 
 # typescript
 *.tsbuildinfo

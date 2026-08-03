@@ -19,6 +19,7 @@ import {
 } from "@/lib/qualifier";
 import { restoreUtm, restoreFbclid } from "@/lib/tracking";
 import { trackGa4EventOnce } from "@/lib/ga4";
+import { fireMetaEventOnce } from "@/lib/meta-client";
 
 /** Send the completed lead to Pabbly (server-side). Never blocks the redirect,
  *  never throws into the submit handler. */
@@ -83,7 +84,24 @@ export default function QualifierForm({
       saveAnswers(final);
       const qualified = isQualified(final);
       postLead(final, qualified);
-      trackGa4EventOnce(qualified ? "generate_lead" : "qualifier_disqualified");
+
+      // CompleteRegistration for every completed form; QualifiedLead additionally
+      // when Q7 = "Yes...". Both GA4 + Meta CAPI, each once per browser.
+      trackGa4EventOnce("complete_registration");
+      if (qualified) trackGa4EventOnce("qualified_lead");
+
+      const metaBody = {
+        name: final.name ?? "",
+        email: final.email ?? "",
+        whatsapp: `${final.dialCode ?? "+91"}${final.whatsapp ?? ""}`,
+        dialCode: final.dialCode ?? "+91",
+        fbclid: restoreFbclid(),
+      };
+      fireMetaEventOnce("fwp_meta_completeregistration", "/api/meta/complete-registration", metaBody);
+      if (qualified) {
+        fireMetaEventOnce("fwp_meta_qualifiedlead", "/api/meta/qualified-lead", metaBody);
+      }
+
       router.push(destinationFor(final));
     },
     [router]
@@ -111,7 +129,7 @@ export default function QualifierForm({
 
   const onContinue = () => {
     if (submitting) return;
-    const err = validate(q.id, value);
+    const err = validate(q.id, value, answers.dialCode);
     if (err) {
       setError(err);
       inputRef.current?.focus();

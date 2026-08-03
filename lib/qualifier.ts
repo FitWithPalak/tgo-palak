@@ -147,7 +147,7 @@ export function destinationFor(a: Answers): string {
    only thing that truly proves an address is sending to it. */
 export const EMAIL_RE = /^[^\s@]+@[^\s@.]+(\.[^\s@.]+)+$/;
 
-export function validate(id: QuestionId, value: string): string | null {
+export function validate(id: QuestionId, value: string, dialCode?: string): string | null {
   const v = (value ?? "").trim();
   if (!v) {
     const q = QUESTIONS.find((x) => x.id === id);
@@ -158,8 +158,18 @@ export function validate(id: QuestionId, value: string): string | null {
     if (!EMAIL_RE.test(v)) return "Enter a valid email address, like you@example.com.";
     if (v.length > 254) return "That email address is too long.";
   }
-  if (id === "whatsapp" && !/^\d{7,15}$/.test(v.replace(/[\s-]/g, "")))
-    return "Enter a valid mobile number (digits only).";
+  if (id === "whatsapp") {
+    const digits = v.replace(/\D/g, "");
+    // The dial code drives the rule. India (+91, the default) mobile numbers are
+    // exactly 10 digits and start 6-9; other codes stay permissive (7-15 digits).
+    if ((dialCode ?? "+91") === "+91") {
+      if (digits.length !== 10) return "Enter a valid 10-digit mobile number.";
+      if (!/^[6-9]/.test(digits))
+        return "Enter a valid Indian mobile number (it starts with 6, 7, 8 or 9).";
+    } else if (!/^\d{7,15}$/.test(digits)) {
+      return "Enter a valid mobile number (7 to 15 digits).";
+    }
+  }
   return null;
 }
 

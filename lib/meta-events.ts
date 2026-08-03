@@ -44,7 +44,8 @@ async function postEvent(
   }
 }
 
-/** AddToCart — intent signal at CTA click. No PII available at this point. */
+/** AddToCart — intent signal at CTA click. No PII available at this point, and
+ *  no value/currency: this is a FREE funnel, so there is nothing to report. */
 export async function sendAddToCartEvent(params: {
   pixelId: string;
   accessToken: string;
@@ -53,8 +54,6 @@ export async function sendAddToCartEvent(params: {
   clientIp?: string;
   clientUserAgent?: string;
   eventSourceUrl: string;
-  value: number;
-  currency: string;
 }): Promise<void> {
   const eventId = params.fbp
     ? sha256(`${params.fbp}|atc`)
@@ -72,7 +71,80 @@ export async function sendAddToCartEvent(params: {
       ...(params.clientUserAgent && { client_user_agent: params.clientUserAgent }),
       ...(params.clientIp && { client_ip_address: params.clientIp }),
     },
-    custom_data: { currency: params.currency, value: params.value },
+  };
+
+  await postEvent(params.pixelId, params.accessToken, event);
+}
+
+// ----------------------------------------------------------------------------
+// Free-funnel lead events (all via CAPI, on the free dataset):
+//   CompleteRegistration (standard) · QualifiedLead (custom) · Schedule (standard)
+// Each carries full hashed PII (em/ph/fn/country/external_id) for high EMQ, plus
+// fbc/fbp/IP/UA. event_id is derived from the hashed email so Meta de-dupes the
+// same user across browsers; the browser also guards once-per-browser before it
+// ever calls the route. custom_data is omitted (PHI-free posture, and the lead
+// funnel is free so there is no value to report).
+// ----------------------------------------------------------------------------
+
+/** Map a dial code to a 2-letter ISO country for the Meta `country` match key. */
+const COUNTRY_BY_DIAL: Record<string, string> = {
+  "+91": "IN", "+971": "AE", "+65": "SG", "+44": "GB", "+1": "US",
+  "+61": "AU", "+60": "MY", "+64": "NZ", "+27": "ZA", "+966": "SA",
+};
+export function countryFromDial(dial: string): string {
+  return COUNTRY_BY_DIAL[(dial ?? "").trim()] ?? "";
+}
+
+/** Reconstruct an fbc from a raw fbclid when the _fbc cookie is absent (EMQ). */
+export function fbcFromFbclid(fbclid: string): string | undefined {
+  const id = (fbclid ?? "").trim();
+  return id ? `fb.1.${Date.now()}.${id}` : undefined;
+}
+
+export async function sendLeadEvent(params: {
+  pixelId: string;
+  accessToken: string;
+  eventName: string; // "CompleteRegistration" | "Schedule" | "QualifiedLead"
+  eventIdSalt: string; // "cr" | "sch" | "ql" — keeps the three event_ids distinct
+  email: string;
+  phone: string; // dial code + number, raw
+  firstName: string;
+  countryCode: string; // 2-letter ISO, may be ""
+  fbc?: string;
+  fbp?: string;
+  clientIp?: string;
+  clientUserAgent?: string;
+  eventSourceUrl: string;
+}): Promise<void> {
+  const normalisedEmail = params.email.trim().toLowerCase();
+  const hashedEmail = normalisedEmail ? sha256(normalisedEmail) : undefined;
+  const externalId = hashedEmail;
+
+  const rawPhone = params.phone.replace(/\D/g, "");
+  const hashedPhone = rawPhone ? sha256(rawPhone) : undefined;
+
+  const fn = params.firstName.trim().toLowerCase();
+  const country = params.countryCode.trim().toLowerCase();
+
+  const event = {
+    event_name: params.eventName,
+    event_time: Math.floor(Date.now() / 1000),
+    event_id: hashedEmail
+      ? sha256(`${normalisedEmail}|${params.eventIdSalt}`)
+      : `${crypto.randomBytes(16).toString("hex")}_${params.eventIdSalt}`,
+    action_source: "website" as const,
+    event_source_url: toOrigin(params.eventSourceUrl),
+    user_data: {
+      ...(hashedEmail && { em: [hashedEmail] }),
+      ...(hashedPhone && { ph: [hashedPhone] }),
+      ...(fn && { fn: [sha256(fn)] }),
+      ...(country && { country: [sha256(country)] }),
+      ...(externalId && { external_id: [externalId] }),
+      ...(params.fbc && { fbc: params.fbc }),
+      ...(params.fbp && { fbp: params.fbp }),
+      ...(params.clientUserAgent && { client_user_agent: params.clientUserAgent }),
+      ...(params.clientIp && { client_ip_address: params.clientIp }),
+    },
   };
 
   await postEvent(params.pixelId, params.accessToken, event);

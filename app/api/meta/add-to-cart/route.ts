@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { pricing, brand } from "@/lib/config";
 import { sendAddToCartEvent } from "@/lib/meta-events";
 
+// Note: `pricing` is still imported only for its test-mode gate (trackingEnabled);
+// no value/currency is sent — this is a free funnel.
+
 // AddToCart CAPI — fired by a landing CTA click (browser beacon). Independent
 // of the Razorpay webhook. Gated by the same test-mode flag as the webhook.
 export async function POST(req: NextRequest) {
@@ -37,8 +40,6 @@ export async function POST(req: NextRequest) {
         clientIp,
         clientUserAgent,
         eventSourceUrl,
-        value: pricing.inr,
-        currency: pricing.currency,
       });
       console.log("[atc] sent");
       return NextResponse.json({ ok: true, capi: "sent" });
