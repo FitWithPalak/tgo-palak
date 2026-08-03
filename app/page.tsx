@@ -27,7 +27,7 @@ export default function Page() {
           <a className="pk-brand" href="#top" aria-label="FitWithPalak home">
             <img className="pk-brand-logo" src="/brand-logo.png" alt="FitWithPalak" />
           </a>
-          <a className="pk-nav-cta" href="/apply">BOOK MY 1:1 CALL WITH PALAK</a>
+          <a className="pk-nav-cta" href="/apply">BOOK MY FREE 1:1 CALL WITH PALAK</a>
         </div>
       </header>
 
@@ -67,7 +67,7 @@ export default function Page() {
             </div>
 
             <a className="cta-big" href="/apply" role="button">
-              BOOK MY 1:1 CALL WITH PALAK
+              BOOK MY FREE 1:1 CALL WITH PALAK
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
               </svg>
@@ -442,7 +442,7 @@ export default function Page() {
 
             <div className="pk-vstack-cta">
               <a className="cta-big" href="/apply" role="button">
-                Book My 1:1 Call With Palak
+                Book My Free 1:1 Call With Palak
                 <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
                 </svg>
@@ -505,7 +505,7 @@ export default function Page() {
 
               <div className="pk-offer-cta">
                 <a className="cta-big" href="/apply" role="button">
-                  BOOK MY 1:1 CALL WITH PALAK
+                  BOOK MY FREE 1:1 CALL WITH PALAK
                   <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
                   </svg>
@@ -641,7 +641,7 @@ export default function Page() {
             </div>
 
             <a className="cta-big" href="/apply" role="button">
-              BOOK MY 1:1 CALL WITH PALAK
+              BOOK MY FREE 1:1 CALL WITH PALAK
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
               </svg>
