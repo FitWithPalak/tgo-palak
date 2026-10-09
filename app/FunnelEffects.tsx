@@ -264,11 +264,9 @@ export default function FunnelEffects({
 
     // --- Analytics triggers (GA4 native + Meta AddToCart CAPI), delegated so
     //     they catch every CTA including the sticky bar (rendered by this comp).
-    // Any CTA that advances into the qualifier -> GA4 add_to_cart + Meta AddToCart.
-    // (QualifierModal also listens for these clicks and preventDefaults them to
-    // open the overlay; preventDefault does not stop propagation, so this still runs.)
+    // Any CTA that goes to the booking page -> GA4 add_to_cart + Meta AddToCart.
     const onCtaClick = (e: MouseEvent) => {
-      const link = (e.target as HTMLElement | null)?.closest?.('a[href="/apply"]');
+      const link = (e.target as HTMLElement | null)?.closest?.('a[href="/book-a-call"]');
       if (!link) return;
       trackGa4EventOnce("add_to_cart");
       fireMetaEventOnce("fwp_atc_fired", "/api/meta/add-to-cart");

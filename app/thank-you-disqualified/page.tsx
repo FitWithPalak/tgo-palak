@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Footer from "../Footer";
-import QualifierModal from "../QualifierModal";
 import DisqualifiedResponses from "./DisqualifiedResponses";
 import {
   INSTAGRAM_URL,
@@ -23,9 +22,6 @@ export const metadata: Metadata = {
 export default function ThankYouDisqualifiedPage() {
   return (
     <>
-      {/* Re-Apply opens the same overlay the landing-page CTAs open. */}
-      <QualifierModal />
-
       {/* ============================================== CHROME */}
       <div className="urgency-strip pk-topstrip" role="note" aria-label="Application received">
         <div className="pk-ticker">

@@ -30,7 +30,7 @@ export default function LegalShell({
           <a className="pk-brand" href="/" aria-label="FitWithPalak home">
             <img className="pk-brand-logo" src="/brand-logo.png" alt="FitWithPalak" />
           </a>
-          <a className="pk-nav-cta" href="/apply">Book My Clarity Call</a>
+          <a className="pk-nav-cta" href="/book-a-call">Book My Clarity Call</a>
         </div>
       </header>
 

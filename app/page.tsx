@@ -1,14 +1,10 @@
 import FunnelEffects from "./FunnelEffects";
-import QualifierModal from "./QualifierModal";
-import { QUALIFIER_PATH } from "@/lib/qualifier";
+import { QUALIFIED_PATH } from "@/lib/qualifier";
 
 export default function Page() {
   return (
     <>
-      <FunnelEffects bookHref={QUALIFIER_PATH} />
-      {/* Every CTA below is a plain <a href="/apply">. This intercepts the click
-          and opens the step form as an overlay; without JS the link still works. */}
-      <QualifierModal />
+      <FunnelEffects bookHref={QUALIFIED_PATH} />
 
       {/* ============================================== 1 · CHROME (page) */}
       <div className="urgency-strip pk-topstrip" role="note" aria-label="What the Clarity Call is">
@@ -27,7 +23,7 @@ export default function Page() {
           <a className="pk-brand" href="#top" aria-label="FitWithPalak home">
             <img className="pk-brand-logo" src="/brand-logo.png" alt="FitWithPalak" />
           </a>
-          <a className="pk-nav-cta" href="/apply">BOOK MY FREE 1:1 CALL WITH PALAK</a>
+          <a className="pk-nav-cta" href="/book-a-call">BOOK MY FREE 1:1 CALL WITH PALAK</a>
         </div>
       </header>
 
@@ -66,7 +62,7 @@ export default function Page() {
               </div>
             </div>
 
-            <a className="cta-big" href="/apply" role="button">
+            <a className="cta-big" href="/book-a-call" role="button">
               BOOK MY FREE 1:1 CALL WITH PALAK
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
@@ -441,7 +437,7 @@ export default function Page() {
             </div>
 
             <div className="pk-vstack-cta">
-              <a className="cta-big" href="/apply" role="button">
+              <a className="cta-big" href="/book-a-call" role="button">
                 Book My Free 1:1 Call With Palak
                 <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
@@ -504,7 +500,7 @@ export default function Page() {
               </div>
 
               <div className="pk-offer-cta">
-                <a className="cta-big" href="/apply" role="button">
+                <a className="cta-big" href="/book-a-call" role="button">
                   BOOK MY FREE 1:1 CALL WITH PALAK
                   <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                     <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
@@ -640,7 +636,7 @@ export default function Page() {
               <p>You were never the reason things have not improved. The picture was incomplete. Thirty minutes from now, you could finally know the actual cause.</p>
             </div>
 
-            <a className="cta-big" href="/apply" role="button">
+            <a className="cta-big" href="/book-a-call" role="button">
               BOOK MY FREE 1:1 CALL WITH PALAK
               <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                 <path d="M4 10h11M11 5.5L15.5 10 11 14.5" />
@@ -672,7 +668,7 @@ export default function Page() {
             <span className="pk-colophon-line">&copy; 2026 FitWithPalak &middot; Clinical Track</span>
             <span className="pk-colophon-orn" aria-hidden="true">&#10022;</span>
             <nav className="pk-colophon-nav" aria-label="Footer">
-              <a href="/apply">Book</a>
+              <a href="/book-a-call">Book</a>
               <a href="#faq">FAQ</a>
               <a href="/privacy">Privacy Policy</a>
               <a href="/terms">Terms &amp; Conditions</a>

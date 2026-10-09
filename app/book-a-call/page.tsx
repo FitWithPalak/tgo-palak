@@ -23,13 +23,13 @@ export default function BookACallPage() {
       <FunnelEffects sticky={false} />
 
       {/* ============================================== CHROME */}
-      <div className="urgency-strip pk-topstrip" role="note" aria-label="Application approved">
+      <div className="urgency-strip pk-topstrip" role="note" aria-label="Book your call">
         <div className="pk-ticker">
           <div className="pk-ticker-grp">
-            <span>Application approved</span><span className="sep" aria-hidden="true">/</span><span>Priority slot held</span><span className="sep" aria-hidden="true">/</span><span>30 minutes, 1:1 with Palak</span>
+            <span>Book your call</span><span className="sep" aria-hidden="true">/</span><span>Priority slot held</span><span className="sep" aria-hidden="true">/</span><span>30 minutes, 1:1 with Palak</span>
           </div>
           <div className="pk-ticker-grp" aria-hidden="true">
-            <span>Application approved</span><span className="sep">/</span><span>Priority slot held</span><span className="sep">/</span><span>30 minutes, 1:1 with Palak</span>
+            <span>Book your call</span><span className="sep">/</span><span>Priority slot held</span><span className="sep">/</span><span>30 minutes, 1:1 with Palak</span>
           </div>
         </div>
       </div>
@@ -39,13 +39,13 @@ export default function BookACallPage() {
           <a className="pk-brand" href="/" aria-label="FitWithPalak home">
             <img className="pk-brand-logo" src="/brand-logo.png" alt="FitWithPalak" />
           </a>
-          <span className="pk-nav-cta" aria-hidden="true">Application approved</span>
+          <span className="pk-nav-cta" aria-hidden="true">Book your call</span>
         </div>
       </header>
 
       <main id="top" className="pk-bookstage">
         {/* ============================================== 1 · SUCCESS HEADER + URGENCY */}
-        <section className="section pk-book-head" aria-label="Application approved">
+        <section className="section pk-book-head" aria-label="Book your call">
           <div className="wrapn">
             <div className="pk-success">
               <span className="pk-success-seal" aria-hidden="true">
@@ -54,9 +54,9 @@ export default function BookACallPage() {
               </span>
             </div>
             <div className="sec-head">
-              <span className="eyebrow">Application approved</span>
-              <h2 className="display">You are in. Now pick your time.</h2>
-              <p className="deck">Your answers qualified you for a priority Clarity Call. Choose a slot below and your call link comes straight to your email.</p>
+              <span className="eyebrow">Book your call</span>
+              <h2 className="display">Pick your time.</h2>
+              <p className="deck">Choose a slot below for your Clarity Call and your call link comes straight to your email.</p>
             </div>
           </div>
         </section>
