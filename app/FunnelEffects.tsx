@@ -4,7 +4,6 @@ import { useEffect, useRef } from "react";
 import { captureTrackingParams, restoreFbclid } from "@/lib/tracking";
 import { trackGa4EventOnce } from "@/lib/ga4";
 import { fireMetaEventOnce } from "@/lib/meta-client";
-import { ANSWERS_KEY } from "@/lib/qualifier";
 
 /* Client-side conversion polish for the FitWithPalak Clinical Track page:
    - a top scroll-progress rail
@@ -279,28 +278,19 @@ export default function FunnelEffects({
       const data = e.data as { event?: string } | undefined;
       if (data && data.event === "calendly.event_scheduled") {
         trackGa4EventOnce("book_call");
-        // Meta Schedule (once per browser). Attach the applicant PII the qualifier
-        // saved in sessionStorage (same tab -> survives the push to /book-a-call)
-        // for high EMQ; if the page was opened fresh it still fires on fbc/fbp/IP/UA.
-        let leadBody: Record<string, unknown> = { fbclid: restoreFbclid() };
-        try {
-          const raw = window.sessionStorage.getItem(ANSWERS_KEY);
-          if (raw) {
-            const a = JSON.parse(raw) as {
-              name?: string; email?: string; whatsapp?: string; dialCode?: string;
-            };
-            leadBody = {
-              name: a.name ?? "",
-              email: a.email ?? "",
-              whatsapp: `${a.dialCode ?? "+91"}${a.whatsapp ?? ""}`,
-              dialCode: a.dialCode ?? "+91",
-              fbclid: restoreFbclid(),
-            };
-          }
-        } catch {
-          /* sessionStorage blocked -> fire with cookie-based match only */
+        // Meta Schedule. Browser Pixel + CAPI share the Calendly invitee uuid as
+        // event id, so Meta de-dupes them into one event. The server route looks the
+        // invitee up in Calendly's API (name / email / phone) and sends hashed PII.
+        const inviteeUri = (e.data as { payload?: { invitee?: { uri?: string } } }).payload?.invitee?.uri ?? "";
+        const eventID = inviteeUri.split("/").pop();
+        const fbq = (window as unknown as { fbq?: (...a: unknown[]) => void }).fbq;
+        if (eventID && typeof fbq === "function") fbq("track", "Schedule", {}, { eventID });
+        if (eventID) {
+          fireMetaEventOnce(`fwp_meta_schedule_${eventID}`, "/api/meta/schedule", {
+            inviteeUri,
+            fbclid: restoreFbclid(),
+          });
         }
-        fireMetaEventOnce("fwp_meta_schedule", "/api/meta/schedule", leadBody);
       }
     };
     window.addEventListener("message", onCalendlyMessage);

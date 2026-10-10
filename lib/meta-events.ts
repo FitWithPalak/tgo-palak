@@ -206,3 +206,56 @@ export async function sendInitiateCheckoutEvent(params: {
 
   await postEvent(params.pixelId, params.accessToken, event);
 }
+
+// ----------------------------------------------------------------------------
+// Schedule — fired from the Calendly `invitee.created` webhook (the source of
+// truth for a booking). event_id is the Calendly invitee uuid, the same id the
+// browser Pixel sends as eventID, so Meta de-dupes the two. user_data carries
+// everything the invitee typed into Calendly plus the fbp/fbc/IP/UA the
+// book-a-call page handed to Calendly through its utm params.
+// ----------------------------------------------------------------------------
+export async function sendScheduleEvent(params: {
+  pixelId: string;
+  accessToken: string;
+  eventId: string; // Calendly invitee uuid
+  eventTime: number; // unix seconds (booking time)
+  email: string;
+  phone: string; // digits incl. country code, may be ""
+  firstName: string;
+  lastName: string;
+  countryCode: string; // 2-letter ISO, may be ""
+  fbc?: string;
+  fbp?: string;
+  clientIp?: string;
+  clientUserAgent?: string;
+  eventSourceUrl: string;
+}): Promise<void> {
+  const normalisedEmail = params.email.trim().toLowerCase();
+  const hashedEmail = normalisedEmail ? sha256(normalisedEmail) : undefined;
+  const rawPhone = params.phone.replace(/\D/g, "");
+  const fn = params.firstName.trim().toLowerCase();
+  const ln = params.lastName.trim().toLowerCase();
+  const country = params.countryCode.trim().toLowerCase();
+
+  const event = {
+    event_name: "Schedule",
+    event_time: params.eventTime,
+    event_id: params.eventId,
+    action_source: "website" as const,
+    event_source_url: toOrigin(params.eventSourceUrl),
+    user_data: {
+      ...(hashedEmail && { em: [hashedEmail] }),
+      ...(rawPhone && { ph: [sha256(rawPhone)] }),
+      ...(fn && { fn: [sha256(fn)] }),
+      ...(ln && { ln: [sha256(ln)] }),
+      ...(country && { country: [sha256(country)] }),
+      ...(hashedEmail && { external_id: [hashedEmail] }),
+      ...(params.fbc && { fbc: params.fbc }),
+      ...(params.fbp && { fbp: params.fbp }),
+      ...(params.clientUserAgent && { client_user_agent: params.clientUserAgent }),
+      ...(params.clientIp && { client_ip_address: params.clientIp }),
+    },
+  };
+
+  await postEvent(params.pixelId, params.accessToken, event);
+}
