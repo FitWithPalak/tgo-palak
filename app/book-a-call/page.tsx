@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import FunnelEffects from "../FunnelEffects";
 import Footer from "../Footer";
+import CalendlyInline from "../CalendlyInline";
 import { brand } from "@/lib/config";
 
 export const metadata: Metadata = {
@@ -71,12 +72,7 @@ export default function BookACallPage() {
               </div>
               <div className="pk-scheduler" aria-label="Scheduler">
                 {calendlyUrl ? (
-                  <iframe
-                    className="pk-scheduler-frame"
-                    src={`${calendlyUrl}?hide_gdpr_banner=1&primary_color=e479af`}
-                    title="Book your Clarity Call with Palak"
-                    loading="lazy"
-                  />
+                  <CalendlyInline url={`${calendlyUrl}?hide_gdpr_banner=1&primary_color=e479af`} />
                 ) : (
                   <div className="pk-scheduler-ph" aria-hidden="true">
                     <span className="ic">
